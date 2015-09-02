@@ -8,7 +8,7 @@ INCLUDEPATH += .
 
 CONFIG += link_pkgconfig
 
-QT += widgets qml quick
+QT += gui qml quick
 
 # Include qtmozembed
 isEmpty(QTEMBED_LIB) {
@@ -18,5 +18,7 @@ isEmpty(QTEMBED_LIB) {
 }
 
 # Input
-HEADERS += declarativewebpage.h
-SOURCES += declarativewebpage.cpp main.cpp
+HEADERS += declarativewebpage.h browsingcontext.h
+SOURCES += declarativewebpage.cpp browsingcontext.cpp main.cpp
+
+OTHER_FILES += *.qml components/*.qml
