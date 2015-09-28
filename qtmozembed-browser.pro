@@ -21,4 +21,6 @@ isEmpty(QTEMBED_LIB) {
 HEADERS += declarativewebpage.h browsingcontext.h
 SOURCES += declarativewebpage.cpp browsingcontext.cpp main.cpp
 
+RESOURCES += $${TARGET}.qrc
+
 OTHER_FILES += *.qml components/*.qml

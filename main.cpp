@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     QMozContext::GetInstance()->addComponentManifest(componentPath + QString("/chrome/EmbedLiteOverrides.manifest"));
 
     QQuickView *view = new QQuickView();
-    view->setSource(app->applicationDirPath() + QDir::separator() + "browser.qml");
+    view->setSource(QUrl("qrc:///browser.qml"));
     view->showFullScreen();
 
     QTimer::singleShot(0, QMozContext::GetInstance(), SLOT(runEmbedding()));
