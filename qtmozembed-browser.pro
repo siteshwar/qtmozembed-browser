@@ -6,9 +6,12 @@ TEMPLATE = app
 TARGET = qtmozembed-browser
 INCLUDEPATH += .
 
-CONFIG += link_pkgconfig
+CONFIG += link_pkgconfig c++11
 
-QT += gui qml quick
+QT += gui gui-private qml quick
+
+PKGCONFIG += sailfishsilica
+INCLUDEPATH += /usr/include/libsailfishsilica
 
 # Include qtmozembed
 isEmpty(QTEMBED_LIB) {
@@ -18,8 +21,16 @@ isEmpty(QTEMBED_LIB) {
 }
 
 # Input
-HEADERS += declarativewebpage.h browsingcontext.h
-SOURCES += declarativewebpage.cpp browsingcontext.cpp main.cpp
+HEADERS += declarativewebpage.h \
+           declarativewebview.h \
+           browsingcontext.h \
+           inputregion.h
+
+SOURCES += declarativewebpage.cpp \
+           declarativewebview.cpp \
+           browsingcontext.cpp \
+           inputregion.cpp \
+           main.cpp
 
 RESOURCES += $${TARGET}.qrc
 
