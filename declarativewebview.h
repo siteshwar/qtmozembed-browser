@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 #ifndef DECLARATIVEWEBVIEW_H
 #define DECLARATIVEWEBVIEW_H
 
@@ -16,7 +23,6 @@ class QTimerEvent;
 
 class DeclarativeWebView : public QWindow, protected QOpenGLFunctions {
     Q_OBJECT
-
     Q_PROPERTY(QWindow *chromeWindow READ chromeWindow WRITE setChromeWindow NOTIFY chromeWindowChanged FINAL)
     Q_PROPERTY(DeclarativeWebPage *currentItem READ currentItem NOTIFY currentItemChanged FINAL)
     Q_PROPERTY(QQmlComponent* delegate READ delegate WRITE setDelegate NOTIFY delegateChanged FINAL)
@@ -54,9 +60,6 @@ protected:
     void focusInEvent(QFocusEvent *event);
     void focusOutEvent(QFocusEvent *event);
     void timerEvent(QTimerEvent *event);
-
-    void classBegin();
-    void componentComplete();
 
 private slots:
     void createGLContext();

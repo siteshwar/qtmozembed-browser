@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 #ifndef BROWSING_CONTEXT_H
 #define BROWSING_CONTEXT_H
 

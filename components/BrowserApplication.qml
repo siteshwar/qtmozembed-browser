@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 import QtQuick 2.1
 import QtMozEmbed.Browser 1.0
 import Sailfish.Silica 1.0
