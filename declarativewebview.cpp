@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 #include "declarativewebview.h"
 #include "declarativewebpage.h"
 
@@ -29,6 +36,7 @@ DeclarativeWebView::DeclarativeWebView(QWindow *parent)
     setenv("USE_ASYNC", "1", 1);
     setenv("USE_NEMO_GSTREAMER", "1", 1);
     setenv("NO_LIMIT_ONE_GST_DECODER", "1", 1);
+    setenv("CUSTOM_UA", "Mozilla/5.0 (Sailfish; U; Jolla; Mobile; rv:31.0) Gecko/31.0 Firefox/31.0 SailfishBrowser/1.0", 1);
 
     // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=929879
     setenv("LC_NUMERIC", "C", 1);

@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 #ifndef DECLARATIVEWEBPAGE_H
 #define DECLARATIVEWEBPAGE_H
 

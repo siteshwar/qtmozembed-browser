@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 #include "declarativewebpage.h"
 
 static const QString gFullScreenMessage("embed:fullscreenchanged");
