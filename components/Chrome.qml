@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jolla Ltd.
+** Contact: Raine Makelainen <raine.makelainen@jolla.com>
+**
+****************************************************************************/
+
 import QtQuick 2.1
 import QtQuick.Window 2.1 as QtQuick
 import QtMozEmbed.Browser 1.0
@@ -7,7 +14,7 @@ Page {
     id: chrome
 
     readonly property rect inputMask: inputMaskForOrientation(orientation)
-    property bool active: true
+    property bool active: chrome.status == PageStatus.Active
     property bool popupActive
     property alias toolbar: toolbar
 
@@ -41,8 +48,10 @@ Page {
     Item {
         id: toolbar
 
+        property alias url: searchField.text
+
         width: chrome.width
-        height: searchField.height
+        height: Math.max(searchField.height, buttons.height)
         y: webView.currentItem && webView.currentItem.chrome ? chrome.height - height : chrome.height
 
         onWindowChanged: chrome.windowChanged(window)
@@ -54,26 +63,89 @@ Page {
 
         Rectangle {
             color: "black"
-            opacity: 0.8
+            opacity: 0.9
             anchors.top: searchField.top
             width: parent.width
             height: width
         }
 
+        Rectangle {
+            id: progressBar
+
+            anchors.bottom: parent.bottom
+            height: Theme.paddingSmall
+            width: parent.width * (webView.currentItem ?
+                                       (webView.currentItem.loadProgress / 100.0) : 0)
+            color: Theme.highlightBackgroundColor
+            opacity: webView.currentItem && webView.currentItem.loading ? 1.0 : 0.0
+
+            Behavior on width {
+                enabled: progressBar.opacity == 1.0
+                SmoothedAnimation {
+                    velocity: 480; duration: 200
+                }
+            }
+            Behavior on opacity { FadeAnimation {} }
+        }
+
         TextField {
             id: searchField
             anchors.bottom: parent.bottom
-            width: parent.width
+            width: parent.width - buttons.width
             background: null
             labelVisible: false
-            placeholderText: "Enter url"
+            placeholderText: text ? webView.currentItem && webView.currentItem.url : "Enter url"
             textTopMargin: Theme.paddingMedium
             inputMethodHints: Qt.ImhNoAutoUppercase
+
+            onFocusChanged: {
+                if (focus) {
+                    selectAll()
+                } else {
+                    deselect()
+                }
+            }
 
             EnterKey.onClicked: {
                 if (webView.currentItem) {
                     webView.currentItem.load(text)
                     chrome.focus = true
+                    searchField.text = Qt.binding(function() {
+                        return webView.currentItem.url
+                    })
+                }
+            }
+        }
+
+        Row {
+            id: buttons
+
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.horizontalPageMargin
+            spacing: Theme.paddingMedium
+
+            IconButton {
+                icon.source: "image://theme/icon-m-back"
+                enabled: webView.currentItem && webView.currentItem.canGoBack
+                onClicked: webView.currentItem.goBack()
+            }
+
+            IconButton {
+                icon.source: "image://theme/icon-m-forward"
+                enabled: webView.currentItem && webView.currentItem.canGoForward
+                onClicked: webView.currentItem.goForward()
+            }
+
+            IconButton {
+                icon.source: webView.currentItem && webView.currentItem.loading
+                             ? "image://theme/icon-m-reset"
+                             : "image://theme/icon-m-refresh"
+                onClicked: {
+                    if (webView.currentItem.loading) {
+                        webView.currentItem.stop()
+                    } else {
+                        webView.currentItem.reload()
+                    }
                 }
             }
         }

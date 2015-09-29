@@ -3,5 +3,9 @@
     <file>browser.qml</file>
     <file>components/BrowserApplication.qml</file>
     <file>components/Chrome.qml</file>
+    <file>components/ContextMenu.qml</file>
+    <file>components/DialogBase.qml</file>
+    <file>components/PromptDialog.qml</file>
+    <file>components/PromptLabel.qml</file>
 </qresource>
 </RCC>
