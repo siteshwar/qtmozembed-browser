@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>browser.qml</file>
+    <file>components/BrowserApplication.qml</file>
+    <file>components/Chrome.qml</file>
+</qresource>
+</RCC>
