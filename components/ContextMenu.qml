@@ -18,6 +18,9 @@ Item {
     property string contentType
     property QtObject webPage
 
+    property int contextPositionX
+    property int contextPositionY
+
     readonly property bool active: visible
 
     function show() {
@@ -182,8 +185,5 @@ Item {
     }
 
     Component.onCompleted: parent.popupActive = true
-    Component.onDestruction: {
-        console.log("Parent...", parent)
-        parent.popupActive = false
-    }
+    Component.onDestruction: parent.popupActive = false
 }

@@ -12,14 +12,18 @@
 
 class BrowsingContext : public QObject {
     Q_OBJECT
+    Q_PROPERTY(qreal pixelRatio READ pixelRatio WRITE setPixelRatio NOTIFY pixelRatioChanged FINAL)
 
 public:
     BrowsingContext(QObject *parent = 0);
 
+    qreal pixelRatio() const;
+    void setPixelRatio(qreal pixelRatio);
+
     Q_INVOKABLE void setPreference(const QString& name, const QVariant& value);
-    Q_INVOKABLE void setPixelRatio(float pixelRatio);
 
 signals:
+    void pixelRatioChanged();
     void completed();
 };
 

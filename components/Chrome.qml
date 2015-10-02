@@ -73,7 +73,7 @@ Page {
             id: progressBar
 
             anchors.bottom: parent.bottom
-            height: Theme.paddingSmall
+            height: Theme.paddingSmall * 0.8
             width: parent.width * (webView.currentItem ?
                                        (webView.currentItem.loadProgress / 100.0) : 0)
             color: Theme.highlightBackgroundColor
@@ -94,7 +94,7 @@ Page {
             width: parent.width - buttons.width
             background: null
             labelVisible: false
-            placeholderText: text ? webView.currentItem && webView.currentItem.url : "Enter url"
+            placeholderText: webView.currentItem && webView.currentItem.url ? webView.currentItem && webView.currentItem.url : "Enter url"
             textTopMargin: Theme.paddingMedium
             inputMethodHints: Qt.ImhNoAutoUppercase
 
