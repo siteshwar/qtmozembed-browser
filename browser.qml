@@ -5,6 +5,10 @@
 **
 ****************************************************************************/
 
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 import QtQuick 2.1
 import QtQuick.Window 2.1 as QtQuick
 import Sailfish.Silica 1.0
@@ -47,10 +51,9 @@ BrowserApplication {
                     var winid = data.winid
                     switch (message) {
                     case "embed:alert": {
-                        // Platform provides PageStack...
                         var alertDialog = pageStack.push("components/PromptDialog.qml", {
-                                                        "text": data.text
-                                                    })
+                                                         "text": data.text
+                                                     })
 
                         alertDialog.done.connect(function() {
                             webPage.sendAsyncMessage("alertresponse", {"winid": winid})
@@ -59,33 +62,40 @@ BrowserApplication {
                         break
                     }
                     case "embed:confirm": {
-                        var dialog = pageStack.push("components/PromptDialog.qml",
-                                                    {"text": data.text})
-                        dialog.accepted.connect(function() {
+                        var confirmDialog = pageStack.push("components/PromptDialog.qml",
+                                                           {"text": data.text})
+                        confirmDialog.accepted.connect(function() {
                             webPage.sendAsyncMessage("confirmresponse",
                                              {"winid": winid, "accepted": true})
                         })
-                        dialog.rejected.connect(function() {
+                        confirmDialog.rejected.connect(function() {
                             webPage.sendAsyncMessage("confirmresponse",
                                              {"winid": winid, "accepted": false})
                         })
                         break
                     }
                     case "Content:ContextMenu": {
+                        // This example does not differ from what could be done on other implementations.
+                        // "components/ContextPopup.qml"
                         var contextMenuComponent = Qt.createComponent("components/ContextMenu.qml")
-                        if (contextMenuComponent.status === Component.Error) {
-                            console.debug("errorString", contextMenuComponent.errorString())
-                        }
 
-                        var contextMenu = contextMenuComponent.createObject(webView.chrome,
-                                                                            {
-                                                                                "linkHref": data.linkURL,
-                                                                                "linkTitle": data.linkTitle.trim(),
-                                                                                "imageSrc": data.mediaURL,
-                                                                                "contentType": data.contentType,
-                                                                                "webPage": webPage
-                                                                            })
-                        contextMenu.show()
+                        var linkHref = data.linkURL;
+                        var linkTitle = data.linkTitle.trim();
+                        var imageSrc = data.mediaURL;
+
+                        if (linkHref || linkTitle || imageSrc) {
+                            var contextMenu = contextMenuComponent.createObject(webView.chrome,
+                                                                                {
+                                                                                    "linkHref": linkHref,
+                                                                                    "linkTitle": linkTitle,
+                                                                                    "imageSrc": imageSrc,
+                                                                                    "contentType": data.contentType,
+                                                                                    "webPage": webPage,
+                                                                                    "contextPositionX": data.xPos * BrowsingContext.pixelRatio,
+                                                                                    "contextPositionY": data.yPos * BrowsingContext.pixelRatio
+                                                                                })
+                            contextMenu.show()
+                        }
                         break
                     }
                     }
@@ -98,7 +108,7 @@ BrowserApplication {
                     addMessageListener("Content:ContextMenu")
 
                     //url = "about:blank"
-                    url = "file:///opt/tests/sailfish-browser/manual/testpage.html"
+                    url = "file:///home/nemo/testwebprompts.html"
                 }
             }
         }
